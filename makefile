@@ -36,6 +36,7 @@ $(SDK_DIR)/components/mqtt/mqtt.c	\
 $(SDK_DIR)/components/mqtt/mqtt_pal.c	\
 $(SDK_DIR)/components/parson/parson.c	\
 $(SDK_DIR)/components/trace/trace.c	\
+$(SDK_DIR)/components/util/util.c	\
 src/host_task/host_task.c	\
 src/cloud_task/cloud_task.c	\
 src/lora_task/lora_task.c	\
@@ -49,8 +50,8 @@ C_INCLUDES =  		\
 -Iexamples/templates	\
 -I$(SDK_DIR)/components/mqtt	\
 -I$(SDK_DIR)/components/parson	\
--I$(SDK_DIR)/components/trace
-
+-I$(SDK_DIR)/components/trace	\
+-I$(SDK_DIR)/components/util
 
 CFLAGS += $(C_INCLUDES) $(C_DEFS)
 

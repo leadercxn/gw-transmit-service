@@ -5,11 +5,11 @@
         "iot_protocol_version"  : 1,
 
         "host_name"  : "JackyChen",
-        "host_addr"  : "JiangMen",
+        "host_addr"  : "JiangMen, HuaFa Seasons",
         "host_phone" : "15622107920",
         "sn"         : "0123456789ABCDEF",
 
-        "deploy_state"      : 0,    // 0:undeploy   1: deployed
+        "deploy_state"      : false,    // 0:undeploy   1: deployed
         "report_interval"   : 90   // uint: s
     },
 

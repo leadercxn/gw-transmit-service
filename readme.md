@@ -23,8 +23,27 @@
 * 
 
 
+## 2. 操作
+### 2.1 文件内容
+* 编译
+    ```bash
+        $ make
+    ```
+
+* 执行
+    ```bash
+        ./bin/gw_transmit_service
+    ```
+
+
+## 3. 坑
+* 
+
 ## n. 参考源码
 ### n.1 mqtt参考源码
 * [MQTT-C](git@github.com:LiamBindle/MQTT-C.git)
+
+
+
 
 

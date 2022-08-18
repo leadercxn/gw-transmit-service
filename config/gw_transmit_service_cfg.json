@@ -1,0 +1,23 @@
+{
+    "app_conf": {
+        "iot_ip_addr" : "42.194.206.95",
+        "iot_port"    : "1883",
+        "iot_protocol_version"  : 1,
+
+        "host_name"  : "JackyChen",
+        "host_addr"  : "JiangMen",
+        "host_phone" : "15622107920",
+        "sn"         : "0123456789ABCDEF",
+
+        "deploy_state"      : 0,    // 0:undeploy   1: deployed
+        "report_interval"   : 90   // uint: s
+    },
+
+    "radio_conf": {
+        "up_frequency"      : 470000000,
+        "down_frequency"    : 471000000,
+        "sf"                : 7,
+        "bandwidth"         : 2,    // 0:125KHz 1:250KHz 2:500KHz
+        "tx_power"          : 14    // uint: db
+    }
+}

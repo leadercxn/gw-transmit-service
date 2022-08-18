@@ -22,7 +22,7 @@ $(info VERSION: $(VERSION))
 
 
 CC = gcc
-CFLAGS = -Wextra -Wall -std=gnu99 -Wno-unused-parameter -Wno-unused-variable -Wno-duplicate-decl-specifier
+CFLAGS = -Wextra -Wall -std=gnu99 -Wno-unused-parameter -Wno-unused-variable -Wno-duplicate-decl-specifier -Wimplicit-fallthrough=0
 
 
 UNAME = $(shell uname -o)
@@ -32,18 +32,24 @@ endif
 
 # C sources
 C_SOURCES = 	\
-src/mqtt.c		\
-src/mqtt_pal.c	\
-../sdk-linux/components/cJSON/cJSON.c	\
-../sdk-linux/components/trace/trace.c
+$(SDK_DIR)/components/mqtt/mqtt.c	\
+$(SDK_DIR)/components/mqtt/mqtt_pal.c	\
+$(SDK_DIR)/components/parson/parson.c	\
+$(SDK_DIR)/components/trace/trace.c	\
+src/host_task/host_task.c	\
+src/cloud_task/cloud_task.c	\
+src/lora_task/lora_task.c	\
+src/config_handler.c
+
 
 # C includes
 C_INCLUDES =  		\
 -Ibsp					\
 -Isrc					\
 -Iexamples/templates	\
--I../sdk-linux/components/cJSON	\
--I../sdk-linux/components/trace
+-I$(SDK_DIR)/components/mqtt	\
+-I$(SDK_DIR)/components/parson	\
+-I$(SDK_DIR)/components/trace
 
 
 CFLAGS += $(C_INCLUDES) $(C_DEFS)

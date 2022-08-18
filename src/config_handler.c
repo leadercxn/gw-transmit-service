@@ -19,7 +19,7 @@ int g_config_file_fd = -1;
 
 app_param_t g_app_param;
 
-int app_config_data_init(void)
+void app_config_data_init(void)
 {
     memset(&g_app_param, 0, sizeof(app_param_t));
 }
@@ -27,12 +27,16 @@ int app_config_data_init(void)
 int app_config_data_get(void)
 {
     const char app_cfg_obj_name[] = "app_conf";
+    const char iot_ip_add_obj_name[] = "iot_ip_addr";
+    const char iot_port_obj_name[] = "iot_port";
+    const char iot_protocol_ver_obj_name[] = "iot_protocol_version";
 
     JSON_Value  *root_val = NULL;
     JSON_Object *app_cfg_obj = NULL;
     JSON_Value  *val = NULL;
 
-    char *p;
+    char  *p = NULL;
+    size_t      len = 0;
 
     // 从配置文件中，获取配置参数
     g_config_file_fd = open(APP_CONFIG_FILE, O_RDWR|O_CREAT, 0666);
@@ -60,7 +64,8 @@ int app_config_data_get(void)
  * @brief 解析 app_conf 配置结构
  */
 #if 1
-        /* point to the app_conf object */
+
+    /* point to the app_conf object */
     app_cfg_obj = json_object_get_object(json_value_get_object(root_val), app_cfg_obj_name);
     if (app_cfg_obj == NULL)
     {
@@ -69,18 +74,42 @@ int app_config_data_get(void)
         return -1;
     }
 
-    val = json_object_get_value(app_cfg_obj, "iot_ip_addr");
+    /* iot_ip_addr */
+    val = json_object_get_value(app_cfg_obj, iot_ip_add_obj_name);
     if(json_value_get_type(val) == JSONString)
     {
-        
-        //trace_debugln("%s", val->value.string);
         p = (char *)json_value_get_string(val);
-        memcpy(p, g_app_param.iot_server_ip, strlen(p));
-        trace_debugln("%s obj have obj %s : %s", app_cfg_obj_name, "iot_ip_addr", g_app_param.iot_server_ip);
+        memcpy(g_app_param.iot_server_ip, p, strlen(p));
+        trace_debugln("%s - %s : %s", app_cfg_obj_name, iot_ip_add_obj_name, g_app_param.iot_server_ip);
     }
     else
     {
-        trace_errorln("%s obj have no obj %s", app_cfg_obj_name, "iot_ip_addr");
+        trace_errorln("%s have no obj : %s !", app_cfg_obj_name, iot_ip_add_obj_name);
+    }
+
+    /* iot_port */
+    val = json_object_get_value(app_cfg_obj, iot_port_obj_name);
+    if(json_value_get_type(val) == JSONString)
+    {
+        p = (char *)json_value_get_string(val);
+        memcpy(g_app_param.iot_server_port, p, strlen(p));
+        trace_debugln("%s - %s : %s", app_cfg_obj_name, iot_port_obj_name, g_app_param.iot_server_port);
+    }
+    else
+    {
+        trace_errorln("%s have no obj : %s !", app_cfg_obj_name, iot_port_obj_name);
+    }
+
+    /* iot_protocol_version */
+    val = json_object_get_value(app_cfg_obj, iot_protocol_ver_obj_name);
+    if(json_value_get_type(val) == JSONNumber)
+    {
+        g_app_param.iot_protocol_version = (unsigned)json_value_get_number(val);
+        trace_debugln("%s - %s : %d", app_cfg_obj_name, iot_protocol_ver_obj_name, g_app_param.iot_protocol_version);
+    }
+    else
+    {
+        trace_errorln("%s have no obj : %s !", app_cfg_obj_name, iot_protocol_ver_obj_name);
     }
 
 

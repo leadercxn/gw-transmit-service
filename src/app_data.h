@@ -23,7 +23,7 @@ typedef struct
     char        iot_server_port[8];
 
     char        user_name[32];
-    uint8_t     protocol_version;
+    uint8_t     iot_protocol_version;   //
 } app_param_t;
 
 

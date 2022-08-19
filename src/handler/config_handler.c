@@ -38,8 +38,16 @@ int app_config_data_get(void)
     const char deploy_state_obj_name[]      = "deploy_state";
     const char report_interval_obj_name[]   = "report_interval";
 
+    const char radio_cfg_obj_name[]         = "radio_conf";
+    const char up_freq_obj_name[]           = "up_frequency";
+    const char down_freq_obj_name[]         = "down_frequency";
+    const char sf_obj_name[]                = "sf";
+    const char bandwidth_obj_name[]         = "bandwidth";
+    const char tx_power_obj_name[]          = "tx_power";
+
     JSON_Value  *root_val = NULL;
     JSON_Object *app_cfg_obj = NULL;
+    JSON_Object *radio_cfg_obj = NULL;
     JSON_Value  *val = NULL;
 
     char    *p = NULL;
@@ -199,15 +207,90 @@ int app_config_data_get(void)
     if(json_value_get_type(val) == JSONNumber)
     {
         g_app_param.report_interval = (unsigned)json_value_get_number(val);
-        trace_debugln("%s - %s : %d", app_cfg_obj_name, report_interval_obj_name, g_app_param.report_interval);
+        trace_debugln("%s - %s : %d\n", app_cfg_obj_name, report_interval_obj_name, g_app_param.report_interval);
     }
     else
     {
-        trace_errorln("%s have no obj : %s !", app_cfg_obj_name, report_interval_obj_name);
+        trace_errorln("%s have no obj : %s ! \n", app_cfg_obj_name, report_interval_obj_name);
     }
 
 #endif
 
+/**
+ * @brief 解析 radio_conf 配置结构
+ */
+#if 1
+    /* point to the radio_conf object */
+    radio_cfg_obj = json_object_get_object(json_value_get_object(root_val), radio_cfg_obj_name);
+    if (radio_cfg_obj == NULL)
+    {
+        trace_error("%s contain a JSON object named %s", APP_CONFIG_FILE, radio_cfg_obj_name);
+        close(g_config_file_fd);
+        return -1;
+    }
+
+    /* up_frequency */
+    val = json_object_get_value(radio_cfg_obj, up_freq_obj_name);
+    if(json_value_get_type(val) == JSONNumber)
+    {
+        g_app_param.up_freq = (unsigned)json_value_get_number(val);
+        trace_debugln("%s - %s : %d", radio_cfg_obj_name, up_freq_obj_name, g_app_param.up_freq);
+    }
+    else
+    {
+        trace_errorln("%s have no obj : %s !", radio_cfg_obj_name, up_freq_obj_name);
+    }
+
+    /* down_frequency */
+    val = json_object_get_value(radio_cfg_obj, down_freq_obj_name);
+    if(json_value_get_type(val) == JSONNumber)
+    {
+        g_app_param.down_freq = (unsigned)json_value_get_number(val);
+        trace_debugln("%s - %s : %d", radio_cfg_obj_name, down_freq_obj_name, g_app_param.down_freq);
+    }
+    else
+    {
+        trace_errorln("%s have no obj : %s !", radio_cfg_obj_name, down_freq_obj_name);
+    }
+
+    /* sf */
+    val = json_object_get_value(radio_cfg_obj, sf_obj_name);
+    if(json_value_get_type(val) == JSONNumber)
+    {
+        g_app_param.sf = (unsigned)json_value_get_number(val);
+        trace_debugln("%s - %s : %d", radio_cfg_obj_name, sf_obj_name, g_app_param.sf);
+    }
+    else
+    {
+        trace_errorln("%s have no obj : %s !", radio_cfg_obj_name, sf_obj_name);
+    }
+
+    /* bandwidth */
+    val = json_object_get_value(radio_cfg_obj, bandwidth_obj_name);
+    if(json_value_get_type(val) == JSONNumber)
+    {
+        g_app_param.bandwidth = (unsigned)json_value_get_number(val);
+        trace_debugln("%s - %s : %d", radio_cfg_obj_name, bandwidth_obj_name, g_app_param.bandwidth);
+    }
+    else
+    {
+        trace_errorln("%s have no obj : %s !", radio_cfg_obj_name, bandwidth_obj_name);
+    }
+
+    /* tx_power */
+    val = json_object_get_value(radio_cfg_obj, tx_power_obj_name);
+    if(json_value_get_type(val) == JSONNumber)
+    {
+        g_app_param.tx_power = (unsigned)json_value_get_number(val);
+        trace_debugln("%s - %s : %d", radio_cfg_obj_name, tx_power_obj_name, g_app_param.tx_power);
+    }
+    else
+    {
+        trace_errorln("%s have no obj : %s !", radio_cfg_obj_name, tx_power_obj_name);
+    }
+
+
+#endif
 
     close(g_config_file_fd);
     trace_debugln("%s config file close", APP_CONFIG_FILE);

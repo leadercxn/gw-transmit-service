@@ -40,14 +40,15 @@ $(SDK_DIR)/components/util/util.c	\
 src/host_task/host_task.c	\
 src/cloud_task/cloud_task.c	\
 src/lora_task/lora_task.c	\
-src/config_handler.c
+src/handler/config_handler.c
 
 
 # C includes
 C_INCLUDES =  		\
 -Ibsp					\
 -Isrc					\
--Iexamples/templates	\
+-Isrc/handler					\
+-Iexamples/templates			\
 -I$(SDK_DIR)/components/mqtt	\
 -I$(SDK_DIR)/components/parson	\
 -I$(SDK_DIR)/components/trace	\
